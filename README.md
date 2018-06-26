@@ -1,27 +1,16 @@
 # eitaro
 
-> A Vue.js project
+Eigo zettai ni oboe taro
 
 ## Build Setup
 
 ``` bash
-# install dependencies
-npm install
+# build
+make docker/run TASK=build
 
 # serve with hot reload at localhost:8080
-npm run dev
+make docker/run TASK=run
 
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-
-# run unit tests
-npm run unit
-
-# run all tests
-npm test
+# deploy to firebase
+make docker/fb/run TASK=deploy
 ```
-
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
