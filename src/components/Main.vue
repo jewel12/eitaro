@@ -18,8 +18,8 @@
     </v-ons-list>
 
     <iframe src="/static/wasm_exec.html" frameborder="0" class="wasm"></iframe>
-    <v-ons-bottom-toolbar>
-      about
+    <v-ons-bottom-toolbar modifier="aligned">
+      <a href="https://github.com/jewel12/eitaro" class="about">about</a>
     </v-ons-bottom-toolbar>
     <router-view></router-view>
   </v-ons-page>
@@ -44,5 +44,10 @@
     position: fixed;
     height: 100%;
     width: 100%;
+  }
+  .about {
+    text-weight: bold;
+    text-decoration: none;
+    color: black;
   }
 </style>
