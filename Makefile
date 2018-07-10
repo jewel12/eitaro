@@ -9,10 +9,6 @@ run:
 dep:
 	npm install
 
-bbb:
-	go version
-	./root/go/bin/go verison
-
 fb/serve:
 	firebase serve --project $(PROJECT_ID)
 
