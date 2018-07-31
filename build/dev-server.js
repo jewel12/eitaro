@@ -24,7 +24,6 @@ const autoOpenBrowser = !!config.dev.autoOpenBrowser
 // https://github.com/chimurai/http-proxy-middleware
 const proxyTable = config.dev.proxyTable
 
-express.static.mime.define({'application/wasm': ['wasm']});
 const app = express()
 
 const compiler = webpack(webpackConfig)

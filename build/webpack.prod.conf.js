@@ -106,7 +106,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     new SWPrecacheWebpackPlugin({
       cacheId: 'eitaro',
       filename: 'service-worker.js',
-      staticFileGlobs: ['dist/**/*.{js,html,css,json,wasm}'],
+      staticFileGlobs: ['dist/**/*.{js,html,css,json}'],
       minify: true,
       stripPrefix: 'dist/'
     })

@@ -17,7 +17,6 @@
       >PUBG (PREPOSITIONS UNKNOWN'S BATTLEGROUNDS</v-ons-list-item>
     </v-ons-list>
 
-    <iframe src="/static/wasm_exec.html" frameborder="0" class="wasm"></iframe>
     <v-ons-bottom-toolbar modifier="aligned">
       <a href="https://github.com/jewel12/eitaro" class="about">about</a>
     </v-ons-bottom-toolbar>
