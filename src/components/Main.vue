@@ -14,7 +14,12 @@
         modifier="chevron" tappable
         @click="$router.push('preps')"
         class="game-select"
-      >PUBG (PREPOSITIONS UNKNOWN'S BATTLEGROUNDS</v-ons-list-item>
+      >pubg (prepositions unknown's battlegrounds</v-ons-list-item>
+      <v-ons-list-item
+        modifier="chevron" tappable
+        @click="$router.push('login')"
+        class="game-select"
+      >LOGIN</v-ons-list-item>
     </v-ons-list>
 
     <v-ons-bottom-toolbar modifier="aligned">

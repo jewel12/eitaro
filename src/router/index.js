@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Main from '@/components/Main'
+import Login from '@/components/Login'
 import Preps from '@/components/preps/Preps'
 import Over from '@/components/preps/Over'
 
@@ -12,6 +13,11 @@ export default new Router({
       path: '/',
       name: 'Main',
       component: Main
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login
     },
     {
       path: '/preps',
