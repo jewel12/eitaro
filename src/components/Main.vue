@@ -14,12 +14,12 @@
         modifier="chevron" tappable
         @click="$router.push('preps')"
         class="game-select"
-      >pubg (prepositions unknown's battlegrounds</v-ons-list-item>
+      >前置詞</v-ons-list-item>
       <v-ons-list-item
         modifier="chevron" tappable
-        @click="$router.push('login')"
+        @click="$router.push('words')"
         class="game-select"
-      >LOGIN</v-ons-list-item>
+      >単語 (ログインが必要です)</v-ons-list-item>
     </v-ons-list>
 
     <v-ons-bottom-toolbar modifier="aligned">
