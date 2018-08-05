@@ -1,9 +1,10 @@
-import db from '../db'
+import {db} from '../db'
 
 export async function loadWords () {
   let qas = []
   let no = 0
-  await db().collection('words').get().then((querySnapshot) => {
+  let _db = await db()
+  await _db.collection('words').get().then((querySnapshot) => {
     querySnapshot.forEach((doc) => {
       no += 1
       qas.push(new QA(
