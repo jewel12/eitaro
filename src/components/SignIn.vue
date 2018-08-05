@@ -14,7 +14,8 @@
         signInSuccessUrl: '/',
         signInOptions: [
           firebase.auth.GoogleAuthProvider.PROVIDER_ID
-        ]
+        ],
+        signInFlow: 'popup'
       })
     }
   }
