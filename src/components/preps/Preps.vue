@@ -17,7 +17,7 @@
 
 <script>
   import Question from './Question'
-  import {loadQuestions} from '../../qa.js'
+  import {loadQuestions} from '@/qa/prep.js'
 
   export default {
     components: {Question},

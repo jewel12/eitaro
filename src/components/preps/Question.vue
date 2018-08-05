@@ -28,7 +28,7 @@
 </template>
 
 <script>
-  import {QA} from '../../qa.js'
+  import {QA} from '../../qa/prep.js'
 
   export default {
     props: {
