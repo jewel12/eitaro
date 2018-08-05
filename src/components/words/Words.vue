@@ -10,12 +10,17 @@
 </template>
 
 <script>
+  import {loadWords} from '../../qa/words'
+
   export default {
     name: 'words',
     created: function () {
+      this.words = loadWords()
+      this.loading = false
     },
     data () {
       return {
+        loading: true
       }
     },
     methods: {

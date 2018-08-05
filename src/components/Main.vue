@@ -19,7 +19,7 @@
         modifier="chevron" tappable
         @click="$router.push('words')"
         class="game-select"
-      >単語 (ログインが必要です)</v-ons-list-item>
+      >{{ words }}</v-ons-list-item>
     </v-ons-list>
 
     <v-ons-bottom-toolbar modifier="aligned">
@@ -30,11 +30,24 @@
 </template>
 
 <script>
+  import firebase from 'firebase'
+
   export default {
     name: 'app',
+    created: function () {
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) this.signedIn = true
+      })
+    },
     data () {
       return {
-        title: 'EITARO'
+        title: 'EITARO',
+        signedIn: false
+      }
+    },
+    computed: {
+      words: function () {
+        return this.signedIn ? '単語' : '単語 (ログインが必要です)'
       }
     }
   }
