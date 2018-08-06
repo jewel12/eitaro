@@ -4,18 +4,18 @@
 
 <script>
   import firebase from 'firebase'
-  import firebaseui from 'firebaseui'
-  import 'firebaseui/dist/firebaseui.css'
 
   export default {
     mounted () {
-      var ui = new firebaseui.auth.AuthUI(firebase.auth())
-      ui.start('#firebaseui-auth-container', {
-        signInSuccessUrl: '/',
-        signInOptions: [
-          firebase.auth.GoogleAuthProvider.PROVIDER_ID
-        ],
-        signInFlow: 'popup'
+      firebase.auth().onAuthStateChanged(user => {
+        if (!user) {
+          var provider = new firebase.auth.GoogleAuthProvider()
+          firebase.auth().signInWithRedirect(provider).then(result => {
+            window.opener.postMessage(
+              {'token': result.credential.idToken}
+              , window.location.protocol + '//' + window.location.host)
+          })
+        }
       })
     }
   }

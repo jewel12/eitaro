@@ -49,9 +49,22 @@ let router = new Router({
 router.beforeEach((to, from, next) => {
   let requiresAuth = to.matched.some(record => record.meta.requiresAuth)
   if (requiresAuth) {
-    firebase.auth().onAuthStateChanged(user => {
-      user ? next() : next('/signin')
-    })
+    if (firebase.auth().currentUser) {
+      next()
+    } else {
+      let popup = window.open('#/signin')
+      window.open('#/signin', 'mywindow')
+      window.addEventListener('message', function (e) {
+        if (event.origin !== window.location.protocol + '//' + window.location.host) return
+        if (typeof e.data === 'object' && 'token' in e.data) {
+          popup.close()
+          let cred = firebase.auth.GoogleAuthProvider.credential(e.data.token)
+          firebase.auth().signInWithCredential(cred).then(_ => {
+            next()
+          })
+        }
+      })
+    }
   } else {
     next()
   }
