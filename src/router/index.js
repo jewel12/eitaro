@@ -53,7 +53,7 @@ router.beforeEach((to, from, next) => {
       next()
     } else {
       let popup = window.open('#/signin')
-      window.open('#/signin', 'mywindow')
+      window.open('#/signin')
       window.addEventListener('message', function (e) {
         if (event.origin !== window.location.protocol + '//' + window.location.host) return
         if (typeof e.data === 'object' && 'token' in e.data) {

@@ -1,23 +1,26 @@
 <template>
   <v-ons-card class="question">
-    <v-ons-row vertical-align="top" class="status"
-      v-bind:class="{ correct: hasAnswered && hasCorrected,
-                        'in-correct': hasAnswered && !hasCorrected }">
+    <v-ons-row vertical-align="top" class="status">
       {{status}}
     </v-ons-row>
     <v-ons-row vertical-align="center" class="desc">
       <ons-col>
-        <p class="word">{{desc}}</p>
-        <div v-if="hasAnswered">
-          <p class="word">{{en}}</p>
-          <p class="word">{{pronunciation}}</p>
+        <div v-if="!hasAnswered">
+          <p class="word">{{desc}}</p>
+        </div>
+        <div v-else>
+          <div class="answered">
+            <p class="answered-pron">{{pronunciation}}</p>
+            <p v-bind:class="[ hasCorrected ? 'corrected' : 'incorrected', 'answered-en']">{{en}}</p>
+            <p class="answered-ja">{{desc}}</p>
+          </div>
         </div>
       </ons-col>
     </v-ons-row>
     <div v-if="!hasAnswered">
       <v-ons-row vertical-align="bottom" class="input">
         <ons-col class="answer" width="90%">
-          <v-ons-input placeholder="Answer" v-model="input" modifier="underbar">
+          <v-ons-input ref="input" type="url" placeholder="Answer" v-model="input" modifier="underbar">
           </v-ons-input>
         </ons-col>
         <ons-col width="10%">
@@ -27,8 +30,8 @@
         </ons-col>
       </v-ons-row>
     </div>
-    <div v-else>
-      <v-ons-button @click="next()">
+    <div class="next" v-else>
+      <v-ons-button class="next-button" @click="next()">
         次へ
       </v-ons-button>
     </div>
@@ -59,10 +62,7 @@
     methods: {
       answer: function () {
         if (this.qa.isCorrect(this.input)) {
-          this.status = '正解'
           this.hasCorrected = true
-        } else {
-          this.status = '残念: ' + this.qa.en
         }
         this.en = this.qa.en
         this.pronunciation = this.qa.pronunciation
@@ -90,17 +90,41 @@
     text-align: center;
     font-size: 80px;
   }
-  .input {
+  ons-input {
     height: 10%;
+    width: 98%;
   }
   .answer {
     height: 100%;
   }
-
-  .correct {
-    background-color: dodgerblue;
+  .next {
+    width: 100%
   }
-  .in-correct {
-    background-color: orangered;
+  .next-button {
+    text-align: center;
+    width: 100%
+  }
+  .answered {
+    text-align: center
+  }
+  .answered-pron {
+    color: #6E6E6E;
+    font-size: 30px
+  }
+  .answered-en {
+    margin: 10px;
+    font-weight: bold;
+    color: #FF0080;
+    font-size: 80px
+  }
+  .corrected {
+    color: #0080FF;
+  }
+  .incorrected {
+    color: #FF0080;
+  }
+  .answered-ja {
+    font-size: 30px;
+    font-weight: bold;
   }
 </style>
