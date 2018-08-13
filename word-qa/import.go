@@ -39,16 +39,21 @@ func main () {
 
 	header := rows[0]
 
+	batch := client.Batch()
+	collection := client.Collection("words")
+
 	for _, row := range(rows) {
 		d := map[string]string{}
 		for col, val := range(row) {
-			
 			d[header[col]] = val
 		}
 
-		_, _, err = client.Collection("words").Add(ctx, d)
-		if err != nil {
-			log.Fatalf("Failed adding the word: %v", err)
-		}
+		doc := collection.NewDoc()
+		batch.Set(doc, d)
 	}	
+
+	_, err = batch.Commit(ctx)
+	if err != nil {
+		log.Fatalf("Failed adding the words.")
+	}
 }
