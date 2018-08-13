@@ -13,3 +13,6 @@ yarn-error.log*
 *.njsproj
 *.sln
 .envrc
+
+word-qa/serviceAccount.json
+word-qa/words.csv
