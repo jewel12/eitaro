@@ -7,6 +7,7 @@ import (
 	"encoding/csv"
 
 	firebase "firebase.google.com/go"
+	firestore "cloud.google.com/go/firestore"
   	"google.golang.org/api/option"
 )
 
@@ -48,8 +49,8 @@ func main () {
 			d[header[col]] = val
 		}
 
-		doc := collection.NewDoc()
-		batch.Set(doc, d)
+		doc := collection.Doc(d["en"] + "_" + d["ja"])
+		batch.Set(doc, d, firestore.MergeAll)
 	}	
 
 	_, err = batch.Commit(ctx)
