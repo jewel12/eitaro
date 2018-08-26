@@ -20,9 +20,8 @@
       }
     },
     created () {
-      let that = this
       firebase.auth().getRedirectResult().then(result => {
-        that.token = JSON.stringify({
+        this.token = JSON.stringify({
           'idToken': result.credential.idToken,
           'accessToken': result.credential.accessToken
         })
@@ -31,7 +30,6 @@
     methods: {
       signin: function () {
         const t = JSON.parse(this.token)
-        console.log(t)
         const cred = firebase.auth.GoogleAuthProvider.credential(
           t.idToken,
           t.accessToken
@@ -47,9 +45,6 @@
             firebase.auth().signInWithRedirect(provider)
           }
         })
-      },
-      test: function () {
-        console.log(this.token)
       }
     }
   }
