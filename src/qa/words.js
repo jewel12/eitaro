@@ -1,11 +1,19 @@
 import {db} from '../db'
 
 export async function loadWords () {
+  const _db = await db()
+
+  let wordRefs = []
+  await _db.collection('priorities').orderBy('priority').limit(10).get().then((prSnapshot) => {
+    prSnapshot.forEach(doc => wordRefs.push(doc.get('word')))
+  })
+
+  const ps = wordRefs.map(r => r.get())
+
   let qas = []
-  let no = 0
-  let _db = await db()
-  await _db.collection('words').get().then((querySnapshot) => {
-    querySnapshot.forEach((doc) => {
+  await Promise.all(ps).then(docs => {
+    let no = 0
+    for (let doc of docs) {
       no += 1
       qas.push(new QA(
         no,
@@ -14,7 +22,7 @@ export async function loadWords () {
         doc.get('pos'),
         doc.get('pronunciation'))
       )
-    })
+    }
   })
   return new QAs(qas)
 }
