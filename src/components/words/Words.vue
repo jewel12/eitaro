@@ -23,6 +23,7 @@
   import Question from './Question'
   import Over from './Over'
   import {loadWords} from '@/qa/words'
+  import firebase from 'firebase'
 
   export default {
     name: 'words',
@@ -39,7 +40,8 @@
     },
     methods: {
       fetch: function () {
-        loadWords().then(qas => {
+        const user = firebase.auth().currentUser.uid
+        loadWords(user).then(qas => {
           this.qas = qas
           this.currentNo = this.qas.current.no
           this.loading = false
@@ -50,6 +52,7 @@
         if (this.qas.hasNext()) {
           this.currentNo = this.qas.current.no
         } else {
+          this.qas.done()
           this.over = true
         }
       }

@@ -1,6 +1,7 @@
+import firebase from 'firebase'
 import {db} from '../db'
 
-export async function loadWords () {
+export async function loadWords (user) {
   const _db = await db()
 
   let wordRefs = []
@@ -18,12 +19,13 @@ export async function loadWords () {
       no += 1
     }
   })
-  return new QAs(qas)
+  return new QAs(qas, user)
 }
 
 export class QAs {
-  constructor (qas) {
+  constructor (qas, user) {
     this.qas = qas
+    this.user = user
     this.cursor = 0
     this._result = new Result()
   }
@@ -57,6 +59,10 @@ export class QAs {
     } else {
       return false
     }
+  }
+
+  done () {
+    sendResult(this._result, this.user)
   }
 }
 
@@ -103,7 +109,7 @@ export class Result {
     return this.answered.map(a => {
       return {
         qa: a[0],
-        isCorrected: a[1]
+        isCorrect: a[1]
       }
     })
   }
@@ -111,4 +117,21 @@ export class Result {
   add (qa, isCorrected) {
     this.answered.push([qa, isCorrected])
   }
+}
+
+async function sendResult (result, user) {
+  const _db = await db()
+  const batch = _db.batch()
+  const studyRecords = _db.collection('studied_records')
+
+  for (let r of result.all()) {
+    batch.set(studyRecords.doc(), {
+      word: r.qa.wordRef,
+      is_correct: r.isCorrect,
+      user: user,
+      studied_at: firebase.firestore.FieldValue.serverTimestamp()
+    })
+  }
+
+  await batch.commit()
 }
