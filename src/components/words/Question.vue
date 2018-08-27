@@ -11,7 +11,7 @@
         <div v-else>
           <div class="answered">
             <p class="answered-pron">{{pronunciation}}</p>
-            <p v-bind:class="[ hasCorrected ? 'corrected' : 'incorrected', 'answered-en']">{{en}}</p>
+            <p v-bind:class="[ hasCorrected ? 'correct' : 'incorrect', 'answered-en']">{{en}}</p>
             <p class="answered-ja">{{desc}}</p>
           </div>
         </div>
@@ -39,10 +39,11 @@
 </template>
 
 <script>
-  import {QA} from '@/qa/words.js'
+  // TODO: 大きくなってきているので出問と回答後の component を切り替えるだけにする
+  import {QA} from '@/qa/words'
 
   export default {
-    name: 'word-question',
+    name: 'words-question',
     props: {
       qa: {
         type: QA
@@ -117,10 +118,10 @@
     color: #FF0080;
     font-size: 80px
   }
-  .corrected {
+  .correct {
     color: #0080FF;
   }
-  .incorrected {
+  .incorrect {
     color: #FF0080;
   }
   .answered-ja {

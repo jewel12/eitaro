@@ -1,9 +1,16 @@
 <template>
   <v-ons-page>
-    <v-ons-card class="result">
-      <div class="title">
-        勝った！勝った！夕飯はドン勝だ！！
-      </div>
+    <v-ons-card class="over">
+      <v-ons-list>
+        <v-ons-list-header>結果</v-ons-list-header>
+
+        <v-ons-list-item v-for="r in result.all()" :key="r.qa.no">
+          <div class="correct-check">
+            <ons-icon icon="check" v-if="r.isCorrected"></ons-icon>
+          </div>
+          {{r.qa.en}}
+        </v-ons-list-item>
+      </v-ons-list>
       <v-ons-button modifier="large" @click="home">
         <ons-icon icon="md-home"> TOP</ons-icon>
       </v-ons-button>
@@ -12,7 +19,14 @@
 </template>
 
 <script>
-  let component = {
+  import {Result} from '@/qa/words'
+
+  export default {
+    props: {
+      result: {
+        type: Result
+      }
+    },
     name: 'words-over',
     methods: {
       home: function () {
@@ -20,18 +34,11 @@
       }
     }
   }
-
-  export default component
-  export {component as Over}
 </script>
 
 <style>
-  .result {
-    height: 90%;
-  }
-  .title {
-    height: 20%;
-    font-weight: bolder;
+  .correct-check {
+    color: lawngreen;
+    width: 30px
   }
 </style>
-

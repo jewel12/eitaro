@@ -4,12 +4,16 @@
       loading...
     </div>
     <div class="content" v-else>
+      <over v-if="over"
+            :result="qas.result"
+      ></over>
       <question
         v-for="q in qas.all()"
         v-show="q.no === currentNo"
         :qa="q"
         :key="q.no"
         @answered="answered"
+        v-else
       ></question>
     </div>
   </v-ons-page>
@@ -17,17 +21,19 @@
 
 <script>
   import Question from './Question'
-  import {loadWords} from '../../qa/words'
+  import Over from './Over'
+  import {loadWords} from '@/qa/words'
 
   export default {
     name: 'words',
-    components: {Question},
+    components: {Question, Over},
     created: function () {
       this.fetch()
     },
     data () {
       return {
         loading: true,
+        over: false,
         currentNo: 0
       }
     },
@@ -39,12 +45,12 @@
           this.loading = false
         })
       },
-      answered: function (isCollected) {
+      answered: function (isCrrect) {
+        this.qas.answer(isCrrect)
         if (this.qas.hasNext()) {
-          this.qas.next()
           this.currentNo = this.qas.current.no
         } else {
-          this.$router.push({path: '/words/over'})
+          this.over = true
         }
       }
     }
