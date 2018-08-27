@@ -1,8 +1,12 @@
 import firebase from 'firebase'
 import {db} from '../db'
 
-export async function loadWords (user) {
+export async function loadWords (userID) {
   const _db = await db()
+
+  const userRef = await _db.collection('users').doc(userID).get().then((user) => {
+    return user.ref
+  })
 
   let wordRefs = []
   await _db.collection('priorities').orderBy('priority').limit(1).get().then((prSnapshot) => {
@@ -19,13 +23,13 @@ export async function loadWords (user) {
       no += 1
     }
   })
-  return new QAs(qas, user)
+  return new QAs(qas, userRef)
 }
 
 export class QAs {
-  constructor (qas, user) {
+  constructor (qas, userRef) {
     this.qas = qas
-    this.user = user
+    this.userRef = userRef
     this.cursor = 0
     this._result = new Result()
   }
@@ -62,7 +66,7 @@ export class QAs {
   }
 
   done () {
-    sendResult(this._result, this.user)
+    sendResult(this._result, this.userRef)
   }
 }
 
@@ -119,7 +123,7 @@ export class Result {
   }
 }
 
-async function sendResult (result, user) {
+async function sendResult (result, userRef) {
   const _db = await db()
   const batch = _db.batch()
   const studyRecords = _db.collection('studied_records')
@@ -128,7 +132,7 @@ async function sendResult (result, user) {
     batch.set(studyRecords.doc(), {
       word: r.qa.wordRef,
       is_correct: r.isCorrect,
-      user: user,
+      user: userRef,
       studied_at: firebase.firestore.FieldValue.serverTimestamp()
     })
   }
