@@ -1,1 +1,5 @@
-{}
+{
+  "projects": {
+    "default": "eitaro-b55a7"
+  }
+}

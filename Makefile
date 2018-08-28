@@ -18,6 +18,12 @@ fb/serve:
 fb/deploy:
 	firebase deploy --project $(PROJECT_ID) --token "$(FIREBASE_TOKEN)"
 
+fb/cf/deploy:
+	firebase deploy --only functions --project $(PROJECT_ID)
+
+fb/cf/init:
+	firebase init functions
+
 fb/login:
 	firebase login:ci
 
