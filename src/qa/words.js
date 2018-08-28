@@ -9,7 +9,7 @@ export async function loadWords (userID) {
   })
 
   let wordRefs = []
-  await _db.collection('priorities').orderBy('priority').limit(1).get().then((prSnapshot) => {
+  await _db.collection('priorities').orderBy('priority', 'desc').limit(1).get().then((prSnapshot) => {
     prSnapshot.forEach(doc => wordRefs.push(doc.get('word')))
   })
 

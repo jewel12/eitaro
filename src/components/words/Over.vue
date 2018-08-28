@@ -6,7 +6,7 @@
 
         <v-ons-list-item v-for="r in result.all()" :key="r.qa.no">
           <div class="correct-check">
-            <ons-icon icon="check" v-if="r.isCorrected"></ons-icon>
+            <ons-icon icon="check" v-if="r.isCorrect"></ons-icon>
           </div>
           {{r.qa.en}}
         </v-ons-list-item>

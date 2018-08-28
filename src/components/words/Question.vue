@@ -11,7 +11,7 @@
         <div v-else>
           <div class="answered">
             <p class="answered-pron">{{pronunciation}}</p>
-            <p v-bind:class="[ hasCorrected ? 'correct' : 'incorrect', 'answered-en']">{{en}}</p>
+            <p v-bind:class="[ isCorrect ? 'correct' : 'incorrect', 'answered-en']">{{en}}</p>
             <p class="answered-ja">{{desc}}</p>
           </div>
         </div>
@@ -54,7 +54,7 @@
         status: this.qa.no + ' 問目',
         desc: this.qa.ja,
         hasAnswered: false,
-        hasCorrected: false,
+        isCorrect: false,
         input: '',
         en: '',
         pronunciation: ''
@@ -63,14 +63,14 @@
     methods: {
       answer: function () {
         if (this.qa.isCorrect(this.input)) {
-          this.hasCorrected = true
+          this.isCorrect = true
         }
         this.en = this.qa.en
         this.pronunciation = this.qa.pronunciation
         this.hasAnswered = true
       },
       next: function () {
-        this.$emit('answered', this.hasCorrected)
+        this.$emit('answered', this.isCorrect)
       }
     }
   }

@@ -47,8 +47,8 @@
           this.loading = false
         })
       },
-      answered: function (isCrrect) {
-        this.qas.answer(isCrrect)
+      answered: function (isCorrect) {
+        this.qas.answer(isCorrect)
         if (this.qas.hasNext()) {
           this.currentNo = this.qas.current.no
         } else {
